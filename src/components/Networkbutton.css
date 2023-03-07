@@ -1,0 +1,16 @@
+.networkButton {
+    margin: 10px 40px 10px 40px;
+}
+
+.button:hover {
+    background-color: darkgray;
+}
+
+.button i {
+    margin-right: 0.5em;
+}
+
+img {
+    height: 30px;
+    width: 30px;
+}

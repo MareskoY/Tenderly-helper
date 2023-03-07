@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Tenderly helper",
+  "description": "Tenderly helper - helps you to fast manage your forks, receive base assets and ERC20 tokens for testing WEB3 applications ",
+  "version": "1.0",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}

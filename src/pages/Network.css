@@ -1,0 +1,10 @@
+.network-page{
+    padding: 20px 20px 20px 20px;
+}
+
+.input-group span{
+    width: 80px
+}
+.input-group input{
+    width: 100%;
+}

@@ -1,0 +1,37 @@
+{
+  "ethereum": {
+    "title": "Ethereum",
+    "chainID": 1,
+    "holderScanner": "https://etherscan.io/token/",
+    "holderEnder": "#balance",
+    "logo": "ethereum_logo.svg"
+  },
+  "avalanche": {
+    "title": "Avalanche",
+    "chainID": 43114,
+    "holderScanner": "https://avascan.info/blockchain/c/address/",
+    "holderEnder": "/holders",
+    "logo": "avalanche_logo.png"
+  },
+  "arbitrum": {
+    "title": "Arbitrum",
+    "chainID": 42161,
+    "holderScanner": "https://arbiscan.io/token/",
+    "holderEnder": "#balances",
+    "logo": "arbitrum_logo.svg"
+  },
+  "polygon": {
+    "title": "Polygon",
+    "chainID": 137,
+    "holderScanner": "https://polygonscan.com/token/",
+    "holderEnder": "#balances",
+    "logo": "polygon_logo.png"
+  },
+  "optimism": {
+    "title": "Optimism",
+    "chainID": 10,
+    "holderScanner": "https://optimistic.etherscan.io/token/",
+    "holderEnder": "#balances",
+    "logo": "optimism_logo.svg"
+  }
+}
