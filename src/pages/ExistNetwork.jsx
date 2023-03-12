@@ -1,9 +1,9 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {useLocation, Navigate} from "react-router-dom";
+import React, {useState} from 'react';
+import {Navigate} from "react-router-dom";
 import { TenderlyFork } from '../utils/tenderly';
 import './network.css';
 import networkData from "../assets/networks.json";
-import { FaSearch } from 'react-icons/fa';
+import {ethers} from "ethers";
 
 function ExistNetwork () {
     //init variables
@@ -23,12 +23,16 @@ function ExistNetwork () {
     const [error, setError] = useState('');
     const [rpcUrl, setRpcUrl] = useState(``);
     const rpcID = rpcUrl.split("/").pop();
-    const [walletAddress, setWalletAddress] = useState(`${testWalletAddress}`);
+    const [walletAddress, setWalletAddress] = useState(`${testWalletAddress == null ? '' : testWalletAddress }`);
     const [baseTokenCount, setBaseTokenCount] = useState(1000);
     const [tokenAddress, setTokenAddress] = useState('');
     const [tokenAmount, setTokenAmount] = useState(1000);
     const [donorAddress, setDonorAddress] = useState('');
     const [tokenDecimalsValue, setDecimalsValue] = useState('18');
+    //errors
+    const [walletAddressError, setWalletAddressError] = useState(false);
+    const [tokenAddressError, setTokenAddressError] = useState(false);
+    const [donorWalletAddressError, setDonorWalletAddressError] = useState(false);
 
     const onRpcUrlChange = (event) => {
         setRpcUrl(event.target.value);
@@ -36,6 +40,11 @@ function ExistNetwork () {
 
     const onWalletAddressChange = (event) => {
         setWalletAddress(event.target.value);
+        setWalletAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setWalletAddressError(true);
+        }
     };
 
     const onBaseTokenCount = (event) => {
@@ -55,6 +64,11 @@ function ExistNetwork () {
 
     const onTokenAddress = (event) => {
         setTokenAddress(event.target.value);
+        setTokenAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setTokenAddressError(true);
+        }
     };
 
     const onTokenAmount = (event) => {
@@ -63,6 +77,11 @@ function ExistNetwork () {
 
     const onDonorAddress = (event) => {
         setDonorAddress(event.target.value);
+        setDonorWalletAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setDonorWalletAddressError(true);
+        }
     };
 
     const onDecimalsTypeChange = (event) => {
@@ -86,15 +105,6 @@ function ExistNetwork () {
             setError(error.message);
         }
     }
-
-    const lookHolders = () => {
-        window.open(`${networkData[networkKey].holderScanner}/${tokenAddress}${networkData[networkKey].holderEnder}`);
-    };
-
-    const copyToClipboard = (text) => {
-        navigator.clipboard.writeText(text);
-    };
-
     return (
         <div className={"network-page"}>
             {error}
@@ -122,6 +132,9 @@ function ExistNetwork () {
                         <span className={"bg-primary text-white"}>WALLET</span>
                         <input type="text" value={walletAddress} onChange={onWalletAddressChange} className="input input-bordered border-primary text-primary" />
                     </label>
+                    <label className="label">
+                        {walletAddressError && <span className="label-text-alt text-error">Not valid address</span>}
+                    </label>
                 </div>
                 <div className="divider"></div>
                 <div className="form-control w-full">
@@ -140,6 +153,9 @@ function ExistNetwork () {
                         <span className="label-text">Token address</span>
                     </label>
                     <input type="text" value={tokenAddress} onChange={onTokenAddress} className="input input-bordered border-primary text-primary" />
+                    <label className="label">
+                        {tokenAddressError && <span className="label-text-alt text-error">Not valid address</span>}
+                    </label>
                 </div>
                 <div className="form-control w-full">
                     <label className="label">
@@ -152,6 +168,9 @@ function ExistNetwork () {
                         <span className="label-text">Donor address</span>
                     </label>
                     <input type="text" value={donorAddress} onChange={onDonorAddress} className="input input-bordered border-primary text-primary" />
+                    <label className="label">
+                        {donorWalletAddressError && <span className="label-text-alt text-error">Not valid address</span>}
+                    </label>
                 </div>
                 <div className={"form-control"}>
                     <label className="label">

@@ -4,6 +4,7 @@ import { TenderlyFork } from '../utils/tenderly';
 import './network.css';
 import networkData from "../assets/networks.json";
 import { FaSearch } from 'react-icons/fa';
+import {ethers} from "ethers";
 
 function Network () {
     //init variables
@@ -43,6 +44,10 @@ function Network () {
     const [tokenAmount, setTokenAmount] = useState(1000);
     const [donorAddress, setDonorAddress] = useState('');
     const [tokenDecimalsValue, setDecimalsValue] = useState('18');
+    //errors
+    const [walletAddressError, setWalletAddressError] = useState(false);
+    const [tokenAddressError, setTokenAddressError] = useState(false);
+    const [donorWalletAddressError, setDonorWalletAddressError] = useState(false);
 
     const onCreateForkClick = async () => {
         try {
@@ -77,6 +82,11 @@ function Network () {
 
     const onWalletAddressChange = (event) => {
         setWalletAddress(event.target.value);
+        setWalletAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setWalletAddressError(true);
+        }
     };
 
     const onBaseTokenCount = (event) => {
@@ -95,6 +105,11 @@ function Network () {
 
     const onTokenAddress = (event) => {
         setTokenAddress(event.target.value);
+        setTokenAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setTokenAddressError(true);
+        }
     };
 
     const onTokenAmount = (event) => {
@@ -103,6 +118,11 @@ function Network () {
 
     const onDonorAddress = (event) => {
         setDonorAddress(event.target.value);
+        setDonorWalletAddressError(false);
+        if(event.target.value !== ''){
+            if(!ethers.utils.isAddress(event.target.value))
+                setDonorWalletAddressError(true);
+        }
     };
 
     const onDecimalsTypeChange = (event) => {
@@ -224,6 +244,9 @@ function Network () {
                         <span className={"bg-primary text-white"}>WALLET</span>
                         <input type="text" value={walletAddress} onChange={onWalletAddressChange} className="input input-bordered border-primary text-primary" />
                     </label>
+                    <label className="label">
+                        {walletAddressError && <span className="label-text-alt text-error">Not valid address</span>}
+                    </label>
                 </div>
                 <div className="divider"></div>
                 <div className="form-control w-full">
@@ -253,11 +276,15 @@ function Network () {
                     <label className="label">
                         <span className="label-text">Donor address</span>
                     </label>
+
                     <label className="input-group">
                         <input type="text" value={donorAddress} onChange={onDonorAddress} className="input input-bordered border-primary text-primary" />
                         <button className="btn btn-active btn-ghost"
                                 onClick={lookHolders} disabled={tokenAddress == ''}><FaSearch />
                         </button>
+                    </label>
+                    <label className="label">
+                        {donorWalletAddressError && <span className="label-text-alt text-error">Not valid address</span>}
                     </label>
                 </div>
                 <div className={"form-control"}>
